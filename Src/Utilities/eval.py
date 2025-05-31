@@ -137,6 +137,7 @@ class UnpackingError(Exception):
 
 async def eval_solver(stream_link,proxies, ForwardProxy, client):
     try:
+        print(ForwardProxy + stream_link)
         headers = {}
         headers["user-agent"] = "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.71 Mobile Safari/537.36"
         headers["User-Agent"] = "Mozilla/5.0 (Linux; Android 12) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.5060.71 Mobile Safari/537.36"
@@ -146,7 +147,7 @@ async def eval_solver(stream_link,proxies, ForwardProxy, client):
         for i in script_all:
             if detect(i.text):
                 unpacked_code = unpack(i.text)
-                match = re.search(r'sources:\s*\[\{\s*src:\s*"([^"]+)"', unpacked_code)
+                match = re.search( r'file:"(.*?)"', unpacked_code)
                 if match:
                     m3u8_url = match.group(1)
                     return m3u8_url
