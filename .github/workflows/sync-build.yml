@@ -1,0 +1,77 @@
+name: Conditional Sync Upstream, Build, and Push Docker Image
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # ogni ora
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+jobs:
+  sync-build-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Backup files and force sync upstream
+        id: sync
+        run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+
+          git remote get-url upstream || git remote add upstream https://github.com/UrloMythus/MammaMia.git
+          git fetch upstream
+
+          backup_dir=".git/backup_files"
+          mkdir -p "$backup_dir/.github/workflows"
+          mkdir -p "$backup_dir/Dockerfiles"
+
+          # Backup files to preserve
+          cp config.json "$backup_dir/config.json"
+          cp update_domains.py "$backup_dir/update_domains.py"
+          cp -r .github/workflows/* "$backup_dir/.github/workflows/" 2>/dev/null || echo "⚠️ No workflows to backup"
+          cp -r Dockerfiles/* "$backup_dir/Dockerfiles/" 2>/dev/null || echo "⚠️ No Dockerfiles to backup"
+
+          git checkout main || git checkout -b main
+          git reset --hard upstream/main
+
+          # Restore preserved files
+          cp "$backup_dir/config.json" config.json
+          cp "$backup_dir/update_domains.py" update_domains.py
+          mkdir -p .github/workflows
+          cp -r "$backup_dir/.github/workflows/"* .github/workflows/ 2>/dev/null || echo "⚠️ No workflows to restore"
+          mkdir -p Dockerfiles
+          cp -r "$backup_dir/Dockerfiles/"* Dockerfiles/ 2>/dev/null || echo "⚠️ No Dockerfiles to restore"
+
+          git add .
+          if git diff --quiet --cached; then
+            echo "no_change=true" >> $GITHUB_OUTPUT
+          else
+            git commit -m "Forced merge from upstream, preserving local files"
+            git push origin main --force
+            echo "no_change=false" >> $GITHUB_OUTPUT
+          fi
+
+          rm -rf "$backup_dir"
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+        if: steps.sync.outputs.no_change == 'false'
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+        if: steps.sync.outputs.no_change == 'false'
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ./Dockerfile
+          push: true
+          tags: dula117/mammamia:latest
+        if: steps.sync.outputs.no_change == 'false'
