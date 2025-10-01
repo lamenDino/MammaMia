@@ -46,7 +46,9 @@ jobs:
           cp -r "$backup_dir/Dockerfiles/"* Dockerfiles/ 2>/dev/null || echo "⚠️ No Dockerfiles to restore"
 
           git add .
-          if git diff --quiet --cached; then
+
+          git fetch origin main
+          if git diff --quiet origin/main...HEAD; then
             echo "no_change=true" >> $GITHUB_OUTPUT
           else
             git commit -m "Forced merge from upstream, preserving local files"
