@@ -9,13 +9,13 @@
                "enabled": "1"
            },
           "StreamingWatch":{
-              "url": "https://www.streamingwatch.org",
+              "url":"https://www.streamingwatch.org",
               "SW_PROXY": "0",
               "SW_ForwardProxy": "0",
               "enabled":"1"
           },
           "CB01":{
-              "url": "https://cb01net.xyz",
+              "url": "https://cb01net.bond",
               "CB_PROXY":"0",
               "CB_ForwardProxy":"0",
               "MX_ForwardProxy":"0",
@@ -23,19 +23,19 @@
               "enabled":"1"
           },
           "Guardaserie":{
-              "url": "https://guardaserietv.help",
+              "url": "https://guardaserietv.uno",
               "enabled":"1",
               "GS_ForwardProxy":"0",
               "GS_PROXY":"0"
           },
           "GuardaHD":{
-              "url": "https://mostraguarda.stream",
+              "url":"https://mostraguarda.stream",
               "enabled":"1",
               "GH_ForwardProxy":"0",
               "GH_PROXY":"0"
           },
           "Eurostreaming":{
-            "url": "https://eurostreaming.dating",
+            "url": "https://eurostreaming.marketing",
             "enabled": "1",
             "ES_ForwardProxy": "0",
             "ES_PROXY": "0"
@@ -64,7 +64,7 @@
        "HOST": "0.0.0.0",
        "PORT": 8080,
        "Name": "MammaMia",
-       "Icon": "🍕",
+       "Icon": "🍕️",
        "level": "info",
        "Global_Proxy": "0"
        }
