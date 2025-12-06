@@ -41,13 +41,13 @@
             "ES_PROXY": "0"
           },  
           "Guardaflix":{
-            "url": "https://guardaflix.onl",
+            "url": "https://guardaflix.me",
             "enabled": "1",
             "GF_ForwardProxy": "0",
             "GF_PROXY": "0"
           },
           "Guardoserie":{
-            "url": "https://guardoserie.buzz",
+            "url": "https://guardoserie.me",
             "enabled": "1",
             "GO_ForwardProxy": "0",
             "GO_PROXY": "0"
