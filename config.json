@@ -9,7 +9,7 @@
                "enabled": "1"
            },
           "CB01":{
-              "url": "https://cb01.uno",
+              "url": "https://cb01uno.rest",
               "CB_PROXY":"0",
               "CB_ForwardProxy":"0",
               "MX_ForwardProxy":"0",
@@ -17,8 +17,8 @@
               "enabled":"1"
           },
           "Guardaserie":{
-              "url": "https://guardaserietv.asia",
-              "enabled":"1",
+              "url": "https://guardaserietv.beer",
+              "enabled":"0",
               "GS_ForwardProxy":"0",
               "GS_PROXY":"0"
           },
@@ -41,7 +41,7 @@
             "GF_PROXY": "0"
           },
           "Guardoserie":{
-            "url": "https://guardoserie.blog",
+            "url": "https://guardoserie.tattoo",
             "enabled": "1",
             "GO_ForwardProxy": "0",
             "GO_PROXY": "0"
